@@ -1,27 +1,39 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Unsplash, { toJson } from 'unsplash-js';
+
+const unsplash = new Unsplash({
+  applicationId: process.env.REACT_APP_ID,
+  secret: process.env.REACT_APP_SECRET,
+  callbackUrl: "{CALLBACK_URL}"
+});
 
 class App extends Component {
+
+  getFirstThumb = searchTerm => {
+    return unsplash.search.photos(searchTerm, 1)
+      .then(toJson)
+      .then(json => {
+        console.log(json.results[0].urls.small)
+      })
+  }
+
+  /*getSomeThumbs = searchTerm => {
+    unsplash.search.photos(searchTerm, 1)
+      .then(toJson)
+      .then(json => {
+        console.log(json.results[0].urls.small)
+      })
+  }*/
+
   render() {
+    const cats = this.getFirstThumb('cats')
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <img src={cats} />
       </div>
-    );
+    )
   }
 }
 
