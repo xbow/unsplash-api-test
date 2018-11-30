@@ -11,27 +11,28 @@ const unsplash = new Unsplash({
 
 class App extends Component {
 
-  getFirstThumb = searchTerm => {
-    return unsplash.search.photos(searchTerm, 1)
-      .then(toJson)
-      .then(json => {
-        console.log(json.results[0].urls.small)
-      })
+  state = {
+    results: []
   }
 
-  /*getSomeThumbs = searchTerm => {
+  getImages = searchTerm => {
     unsplash.search.photos(searchTerm, 1)
       .then(toJson)
       .then(json => {
-        console.log(json.results[0].urls.small)
+        this.setState({ results: json.results })
       })
-  }*/
+  }
+
+  componentDidMount() {
+    this.getImages('cats')
+  }
 
   render() {
-    const cats = this.getFirstThumb('cats')
     return (
       <div className="App">
-        <img src={cats} />
+        {this.state.results.map(result => (
+          <img key={result.id} alt={result.description} src={result.urls.small} />
+        ))}
       </div>
     )
   }
