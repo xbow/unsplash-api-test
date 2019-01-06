@@ -1,13 +1,12 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Unsplash, { toJson } from 'unsplash-js';
+import React, { Component } from 'react'
+import './App.css'
+import Unsplash, { toJson } from 'unsplash-js'
 
 const unsplash = new Unsplash({
   applicationId: process.env.REACT_APP_ID,
   secret: process.env.REACT_APP_SECRET,
   callbackUrl: "{CALLBACK_URL}"
-});
+})
 
 class App extends Component {
 
@@ -38,4 +37,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default App
